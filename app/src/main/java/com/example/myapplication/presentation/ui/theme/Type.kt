@@ -2,14 +2,24 @@ package com.example.myapplication.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 
 // Set of Material typography styles to start with
+
+val Fredoka = FontFamily(
+    Font(R.font.fredoka_bold, weight = FontWeight.Bold),
+    Font(R.font.fredoka_semi_bold, weight = FontWeight.SemiBold),
+    Font(R.font.fredoka_medium, weight = FontWeight.Medium),
+    Font(R.font.fredoka_regular, weight = FontWeight.Normal),
+    Font(R.font.fredoka_light, weight = FontWeight.Light),
+)
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = Fredoka,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,

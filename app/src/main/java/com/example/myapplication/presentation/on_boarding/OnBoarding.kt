@@ -1,11 +1,11 @@
 package com.example.myapplication.presentation.on_boarding
 
-import android.text.Layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,10 +19,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,12 +30,12 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.presentation.reusable.Space
 import com.example.myapplication.presentation.ui.theme.Blue
@@ -43,10 +43,12 @@ import com.example.myapplication.presentation.ui.theme.Dark
 import com.example.myapplication.presentation.ui.theme.DarkGray
 import com.example.myapplication.presentation.ui.theme.LightGray
 import com.example.myapplication.presentation.ui.theme.Orange
+import kotlinx.coroutines.launch
 
 @Composable
-fun OnBoarding() {
+fun OnBoarding(navController: NavController, innerPadding: PaddingValues) {
     val pagerState = rememberPagerState { 3 }
+    val coroutine = rememberCoroutineScope()
     val images = listOf(
         painterResource(R.drawable.on_board_img1),
         painterResource(R.drawable.on_board_img2),
@@ -67,13 +69,37 @@ fun OnBoarding() {
         "More",
         "Choose a language",
     )
-    HorizontalPager(pagerState) { pageIndex ->
+    val onClickFunctions = listOf(
+        {
+            coroutine.launch {
+                pagerState.animateScrollToPage(1)
+            }
+            return@listOf Unit
+        },
+        {
+            coroutine.launch {
+                pagerState.animateScrollToPage(2)
+            }
+            return@listOf Unit
+        },
+        {
+            navController.navigate("selectLanguage")
+        },
+    )
+
+    HorizontalPager(
+        pagerState,
+        modifier = Modifier
+            .padding(innerPadding)
+            .padding(horizontal = 20.dp)
+    ) { pageIndex ->
         OnBoardingPage(
             images[pageIndex],
             pagerState,
             titles[pageIndex],
             subtitles[pageIndex],
-            buttontexts[pageIndex]
+            buttontexts[pageIndex],
+            onClickFunctions[pageIndex]
         )
     }
 }
@@ -84,7 +110,8 @@ fun OnBoardingPage(
     pagerState: PagerState,
     title: String,
     subTitle: String,
-    butttonText: String
+    buttonText: String,
+    onClickFun: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Space(height = 150.dp)
@@ -106,7 +133,7 @@ fun OnBoardingPage(
             }
         }
         Space(height = 40.dp)
-        Text(title, color = Dark, fontSize = 22.sp)
+        Text(title, color = Dark, fontSize = 22.sp, fontWeight = W500)
         Space(height = 8.dp)
         Text(
             subTitle,
@@ -118,13 +145,13 @@ fun OnBoardingPage(
         )
         Space(height = 50.dp)
         Button(
-            {},
+            onClickFun,
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Blue, RoundedCornerShape(12.dp)),
         ) {
-            Text(butttonText, color = Color.White, fontSize = 20.sp)
+            Text(buttonText, color = Color.White, fontSize = 20.sp, fontWeight = W500)
         }
         Space(height = 16.dp)
         TextButton({}) {
