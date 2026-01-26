@@ -32,13 +32,14 @@ import com.example.myapplication.presentation.ui.theme.LightOrange
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
+import androidx.navigation.NavController
 import com.example.myapplication.presentation.ui.theme.Blue
 import com.example.myapplication.presentation.ui.theme.LightGray
 import com.example.myapplication.presentation.ui.theme.Orange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChooseLanguageScreen() {
+fun ChooseLanguageScreen(navController: NavController) {
     val currentLanguage = remember { mutableStateOf(0) }
     Scaffold(
         topBar = {
@@ -93,7 +94,7 @@ fun ChooseLanguageScreen() {
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                {},
+                {navController.navigate("Login")},
                 colors = ButtonDefaults.buttonColors(containerColor = Blue),
                 shape = RoundedCornerShape(50),
                 modifier = Modifier

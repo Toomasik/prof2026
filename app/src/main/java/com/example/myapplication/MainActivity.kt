@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.presentation.choose_language.ChooseLanguageScreen
+import com.example.myapplication.presentation.login.LoginScreen
 import com.example.myapplication.presentation.on_boarding.OnBoarding
 import com.example.myapplication.presentation.ui.theme.MyApplicationTheme
 
@@ -32,7 +33,10 @@ class MainActivity : ComponentActivity() {
                             OnBoarding(navController, innerPadding)
                         }
                         composable("selectLanguage") {
-                            ChooseLanguageScreen()
+                            ChooseLanguageScreen(navController)
+                        }
+                        composable("Login") {
+                            LoginScreen(navController)
                         }
                     }
                 }
