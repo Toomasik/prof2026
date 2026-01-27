@@ -19,6 +19,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -46,7 +47,7 @@ import com.example.myapplication.presentation.ui.theme.Orange
 import kotlinx.coroutines.launch
 
 @Composable
-fun OnBoarding(navController: NavController, innerPadding: PaddingValues) {
+fun OnBoarding(navController: NavController) {
     val pagerState = rememberPagerState { 3 }
     val coroutine = rememberCoroutineScope()
     val images = listOf(
@@ -86,22 +87,25 @@ fun OnBoarding(navController: NavController, innerPadding: PaddingValues) {
             navController.navigate("selectLanguage")
         },
     )
-
-    HorizontalPager(
-        pagerState,
-        modifier = Modifier
-            .padding(innerPadding)
-            .padding(horizontal = 20.dp)
-    ) { pageIndex ->
-        OnBoardingPage(
-            images[pageIndex],
+    Scaffold() { innerPadding ->
+        HorizontalPager(
             pagerState,
-            titles[pageIndex],
-            subtitles[pageIndex],
-            buttontexts[pageIndex],
-            onClickFunctions[pageIndex]
-        )
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 20.dp)
+        ) { pageIndex ->
+            OnBoardingPage(
+                images[pageIndex],
+                pagerState,
+                titles[pageIndex],
+                subtitles[pageIndex],
+                buttontexts[pageIndex],
+                onClickFunctions[pageIndex],
+                navController
+            )
+        }
     }
+
 }
 
 @Composable
@@ -111,7 +115,8 @@ fun OnBoardingPage(
     title: String,
     subTitle: String,
     buttonText: String,
-    onClickFun: () -> Unit
+    onClickFun: () -> Unit,
+    navController: NavController
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Space(height = 150.dp)
@@ -154,7 +159,7 @@ fun OnBoardingPage(
             Text(buttonText, color = Color.White, fontSize = 20.sp, fontWeight = W500)
         }
         Space(height = 16.dp)
-        TextButton({}) {
+        TextButton({navController.navigate("Login")}) {
             Text(
                 text = "Skip onboarding",
                 color = Dark,

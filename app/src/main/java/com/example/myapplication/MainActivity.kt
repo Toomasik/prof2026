@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.presentation.SignUp.SignUp
 import com.example.myapplication.presentation.choose_language.ChooseLanguageScreen
 import com.example.myapplication.presentation.login.LoginScreen
 import com.example.myapplication.presentation.on_boarding.OnBoarding
@@ -25,21 +26,22 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             MyApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
-                    innerPadding
-                    NavHost(navController = navController, startDestination = "onBoard") {
-                        composable("onBoard") {
-                            OnBoarding(navController, innerPadding)
-                        }
-                        composable("selectLanguage") {
-                            ChooseLanguageScreen(navController)
-                        }
-                        composable("Login") {
-                            LoginScreen(navController)
-                        }
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "onBoard") {
+                    composable("onBoard") {
+                        OnBoarding(navController)
+                    }
+                    composable("selectLanguage") {
+                        ChooseLanguageScreen(navController)
+                    }
+                    composable("Login") {
+                        LoginScreen(navController)
+                    }
+                    composable("SignUp") {
+                        SignUp(navController)
                     }
                 }
+
 
             }
         }

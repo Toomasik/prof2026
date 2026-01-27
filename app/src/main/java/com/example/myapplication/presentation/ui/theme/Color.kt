@@ -14,6 +14,11 @@ val Blue = Color(0xff5B7BFE)
 val Orange = Color(0xffF76400)
 val LightGray = Color(0x33080E1E)
 val DarkGray = Color(0x99080E1E)
+val VeryLightGray = Color(0x0D080E1E)
+
+val GrayDark = Color(0x80656872)
 val Dark = Color(0xff080E1E)
 val DeepBlue = Color(0xff410FA3)
 val LightOrange = Color(0xffFFF6EB)
+
+val Red = Color(0xffD6185D)
