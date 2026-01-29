@@ -29,14 +29,19 @@ import com.example.myapplication.presentation.ui.theme.LightGray
 import com.example.myapplication.presentation.ui.theme.VeryLightGray
 
 @Composable
-fun InputComponent(title: String, placeholder: String, isPassword: Boolean) {
-    var inputValue by remember { mutableStateOf("") }
+fun InputComponent(
+    title: String,
+    placeholder: String,
+    isPassword: Boolean,
+    value: String,
+    onValueChanged: (String) -> Unit
+) {
     var isHided by remember { mutableStateOf(true) }
     Text(title, fontSize = 15.sp, color = DarkGray, modifier = Modifier.fillMaxWidth())
     Space(height = 8.dp)
     OutlinedTextField(
-        inputValue,
-        { inputValue = it },
+        value,
+        onValueChanged,
         placeholder = {
             Text(placeholder, fontSize = 15.sp, color = GrayDark)
         },

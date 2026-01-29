@@ -28,6 +28,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,23 +50,26 @@ import com.example.myapplication.presentation.ui.theme.Dark
 import com.example.myapplication.presentation.ui.theme.DeepBlue
 import com.example.myapplication.presentation.ui.theme.GrayDark
 import com.example.myapplication.presentation.ui.theme.Red
+import com.example.myapplication.presentation.ui.theme.VeryLightGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController) {
+    var emailValue by remember { mutableStateOf("") }
+    var passwordValue by remember { mutableStateOf("") }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        "Login",
-                        color = Color.White,
-                        fontSize = 17.sp,
-                        fontWeight = W500,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
+                Text(
+                    "Login",
+                    color = Color.White,
+                    fontSize = 17.sp,
+                    fontWeight = W500,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            },
                 navigationIcon = {
                     IconButton({ navController.popBackStack() }) {
                         Icon(
@@ -72,12 +79,10 @@ fun LoginScreen(navController: NavController) {
                         )
                     }
                 },
-                modifier = Modifier
-                    .background(DeepBlue),
+                modifier = Modifier.background(DeepBlue),
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = DeepBlue)
             )
-        }
-    ) { innerPadding ->
+        }) { innerPadding ->
         Column(
             Modifier
                 .fillMaxSize()
@@ -101,9 +106,9 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier.width(263.dp)
             )
             Space(height = 32.dp)
-            InputComponent("Email addres", "Email", false)
+            InputComponent("Email addres", "Email", false, emailValue, { emailValue = it })
             Space(height = 24.dp)
-            InputComponent("Password", "Password", true)
+            InputComponent("Password", "Password", true, passwordValue, { passwordValue = it })
             Space(height = 12.dp)
             Text(
                 text = "Forgot Password ",
@@ -114,7 +119,7 @@ fun LoginScreen(navController: NavController) {
             )
             Space(height = 32.dp)
             Button(
-                {},
+                {navController.navigate("Main")},
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,8 +129,10 @@ fun LoginScreen(navController: NavController) {
             }
             Space(height = 32.dp)
             Row() {
-                Text("Not you member? ", color = GrayDark, fontSize = 17.sp, fontWeight = W500)
-                TextButton({navController.navigate("SignUp")}, contentPadding = PaddingValues(0.dp)) {
+                Text("Not you member? ", color = VeryLightGray, fontSize = 17.sp, fontWeight = W500)
+                TextButton(
+                    { navController.navigate("SignUp") }, contentPadding = PaddingValues(0.dp)
+                ) {
                     Text("Signup", color = Blue, fontSize = 17.sp, fontWeight = W500)
                 }
             }

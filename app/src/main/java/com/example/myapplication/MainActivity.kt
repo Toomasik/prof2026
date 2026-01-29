@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.presentation.SignUp.SignUp
 import com.example.myapplication.presentation.choose_language.ChooseLanguageScreen
 import com.example.myapplication.presentation.login.LoginScreen
+import com.example.myapplication.presentation.main.MainScreen
 import com.example.myapplication.presentation.on_boarding.OnBoarding
 import com.example.myapplication.presentation.ui.theme.MyApplicationTheme
 
@@ -39,6 +40,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("SignUp") {
                         SignUp(navController)
+                    }
+                    composable("Main") {
+                        MainScreen()
                     }
                 }
 

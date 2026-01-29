@@ -53,182 +53,212 @@ import com.example.myapplication.presentation.ui.theme.GrayDark
 @Composable
 fun SignUp(navController: NavController) {
     val signUpNavHost = rememberNavController()
+    var firstNameValue by remember { mutableStateOf("") }
+    var lastNameValue by remember { mutableStateOf("") }
+    var emailValue by remember { mutableStateOf("") }
+    var passwordValue by remember { mutableStateOf("") }
+    var passwordConfrimValue by remember { mutableStateOf("") }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun SignUppart1(
+        mainNavController: NavController,
+        signUpNavController: NavController,
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            "Signup",
+                            color = Color.White,
+                            fontSize = 17.sp,
+                            fontWeight = W500,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton({ mainNavController.popBackStack() }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                                contentDescription = "Back",
+                                tint = Color.White,
+                            )
+                        }
+                    },
+                    modifier = Modifier.background(DeepBlue),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = DeepBlue)
+                )
+            }) { innerPadding ->
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Space(height = 24.dp)
+                Text(
+                    text = "Create an Account",
+                    color = Dark,
+                    fontSize = 22.sp,
+                    fontWeight = W500,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(263.dp)
+                )
+                Space(height = 32.dp)
+                InputComponent(
+                    "First Name",
+                    "Your First Name",
+                    false,
+                    firstNameValue,
+                    { firstNameValue = it })
+                Space(height = 24.dp)
+                InputComponent(
+                    "Last Name",
+                    "Your Last Name",
+                    false,
+                    lastNameValue,
+                    { lastNameValue = it })
+                Space(height = 24.dp)
+                InputComponent("Email", "Email Address", false, emailValue, { emailValue = it })
+                Space(height = 32.dp)
+                Button(
+                    { signUpNavController.navigate("part2") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Blue, RoundedCornerShape(12.dp)),
+                ) {
+                    Text("Continue", color = Color.White, fontSize = 20.sp, fontWeight = W500)
+                }
+                Space(height = 32.dp)
+                Row() {
+                    Text(
+                        "Already you member? ",
+                        color = GrayDark,
+                        fontSize = 17.sp,
+                        fontWeight = W500
+                    )
+                    TextButton(
+                        { mainNavController.navigate("Login") },
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+                        Text("Login", color = Blue, fontSize = 17.sp, fontWeight = W500)
+                    }
+                }
+            }
+        }
+
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+    @Composable
+    fun SignUppart2(mainNavController: NavController, signUpNavController: NavController) {
+        var isChecked by remember { mutableStateOf(false) }
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(
+                            "Signup",
+                            color = Color.White,
+                            fontSize = 17.sp,
+                            fontWeight = W500,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton({ signUpNavController.popBackStack() }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                                contentDescription = "Back",
+                                tint = Color.White,
+                            )
+                        }
+                    },
+                    modifier = Modifier.background(DeepBlue),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = DeepBlue)
+                )
+            }) { innerPadding ->
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Space(height = 24.dp)
+                Text(
+                    text = "Choose a Password",
+                    color = Dark,
+                    fontSize = 22.sp,
+                    fontWeight = W500,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(263.dp)
+                )
+                Space(height = 32.dp)
+                InputComponent("Password", "Password", true, passwordValue, { passwordValue = it })
+                Space(height = 24.dp)
+                InputComponent(
+                    "Confirm Password",
+                    "Confirm Password",
+                    true,
+                    passwordConfrimValue,
+                    { passwordConfrimValue = it })
+                Space(height = 24.dp)
+                FlowRow(Modifier.fillMaxWidth()) {
+                    Checkbox(
+                        isChecked,
+                        { isChecked = !isChecked },
+                        colors = CheckboxDefaults.colors(checkedColor = Blue, uncheckedColor = Blue)
+                    )
+                    Text("I ", color = GrayDark, fontSize = 17.sp)
+                    Text(
+                        "have made myself acquainted with the Rules",
+                        color = DeepBlue,
+                        fontSize = 17.sp
+                    )
+                    Text("_and accept all its provisions,", color = GrayDark, fontSize = 17.sp)
+                }
+                Space(height = 75.dp)
+                Button(
+                    { signUpNavController.navigate("part1") },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Blue, RoundedCornerShape(12.dp)),
+                ) {
+                    Text("SignUp", color = Color.White, fontSize = 20.sp, fontWeight = W500)
+                }
+                Space(height = 32.dp)
+                Row() {
+                    Text(
+                        "Already you member? ",
+                        color = GrayDark,
+                        fontSize = 17.sp,
+                        fontWeight = W500
+                    )
+                    TextButton(
+                        { mainNavController.navigate("Login") },
+                        contentPadding = PaddingValues(0.dp)
+                    ) {
+                        Text("Login", color = Blue, fontSize = 17.sp, fontWeight = W500)
+                    }
+                }
+            }
+        }
+
+    }
+
     NavHost(signUpNavHost, startDestination = "part1") {
         composable("part1") {
             SignUppart1(navController, signUpNavHost)
         }
         composable("part2") {
             SignUppart2(navController, signUpNavHost)
-        }
-    }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SignUppart1(mainNavController: NavController, signUpNavController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Signup",
-                        color = Color.White,
-                        fontSize = 17.sp,
-                        fontWeight = W500,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton({ mainNavController.popBackStack() }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            contentDescription = "Back",
-                            tint = Color.White,
-                        )
-                    }
-                },
-                modifier = Modifier
-                    .background(DeepBlue),
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = DeepBlue)
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Space(height = 24.dp)
-            Text(
-                text = "Create an Account",
-                color = Dark,
-                fontSize = 22.sp,
-                fontWeight = W500,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.width(263.dp)
-            )
-            Space(height = 32.dp)
-            InputComponent("First Name", "Your First Name", false)
-            Space(height = 24.dp)
-            InputComponent("Last Name", "Your Last Name", false)
-            Space(height = 24.dp)
-            InputComponent("Email", "Email Address", false)
-            Space(height = 32.dp)
-            Button(
-                { signUpNavController.navigate("part2") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Blue, RoundedCornerShape(12.dp)),
-            ) {
-                Text("Continue", color = Color.White, fontSize = 20.sp, fontWeight = W500)
-            }
-            Space(height = 32.dp)
-            Row() {
-                Text("Already you member? ", color = GrayDark, fontSize = 17.sp, fontWeight = W500)
-                TextButton(
-                    { mainNavController.navigate("Login") },
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Text("Login", color = Blue, fontSize = 17.sp, fontWeight = W500)
-                }
-            }
-        }
-    }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun SignUppart2(mainNavController: NavController, signUpNavController: NavController) {
-    var isChecked by remember { mutableStateOf(false) }
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Signup",
-                        color = Color.White,
-                        fontSize = 17.sp,
-                        fontWeight = W500,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton({ signUpNavController.popBackStack() }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            contentDescription = "Back",
-                            tint = Color.White,
-                        )
-                    }
-                },
-                modifier = Modifier
-                    .background(DeepBlue),
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = DeepBlue)
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Space(height = 24.dp)
-            Text(
-                text = "Choose a Password",
-                color = Dark,
-                fontSize = 22.sp,
-                fontWeight = W500,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.width(263.dp)
-            )
-            Space(height = 32.dp)
-            InputComponent("Password", "Password", true)
-            Space(height = 24.dp)
-            InputComponent("Confirm Password", "Confirm Password", true)
-            Space(height = 24.dp)
-            FlowRow(Modifier.fillMaxWidth()) {
-                Checkbox(
-                    isChecked,
-                    { isChecked = !isChecked },
-                    colors = CheckboxDefaults.colors(checkedColor = Blue, uncheckedColor = Blue)
-                )
-                Text("I ", color = GrayDark, fontSize = 17.sp)
-                Text(
-                    "have made myself acquainted with the Rules",
-                    color = DeepBlue,
-                    fontSize = 17.sp
-                )
-                Text("_and accept all its provisions,", color = GrayDark, fontSize = 17.sp)
-            }
-            Space(height = 75.dp)
-            Button(
-                { signUpNavController.navigate("part1") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Blue, RoundedCornerShape(12.dp)),
-            ) {
-                Text("SignUp", color = Color.White, fontSize = 20.sp, fontWeight = W500)
-            }
-            Space(height = 32.dp)
-            Row() {
-                Text("Already you member? ", color = GrayDark, fontSize = 17.sp, fontWeight = W500)
-                TextButton(
-                    { mainNavController.navigate("Login") },
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Text("Login", color = Blue, fontSize = 17.sp, fontWeight = W500)
-                }
-            }
         }
     }
 
