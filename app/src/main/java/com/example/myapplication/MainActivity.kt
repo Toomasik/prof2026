@@ -18,6 +18,7 @@ import com.example.myapplication.presentation.choose_language.ChooseLanguageScre
 import com.example.myapplication.presentation.login.LoginScreen
 import com.example.myapplication.presentation.main.MainScreen
 import com.example.myapplication.presentation.on_boarding.OnBoarding
+import com.example.myapplication.presentation.profile.ProfileScreen
 import com.example.myapplication.presentation.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,7 +43,10 @@ class MainActivity : ComponentActivity() {
                         SignUp(navController)
                     }
                     composable("Main") {
-                        MainScreen()
+                        MainScreen(navController)
+                    }
+                    composable("Profile") {
+                        ProfileScreen(navController)
                     }
                 }
 

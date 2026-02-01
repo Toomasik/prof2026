@@ -25,3 +25,4 @@ val LightOrange = Color(0xffFFF6EB)
 val Red = Color(0xffD6185D)
 
 val GrayText = Color(0xffB6B6B6)
+val Green = Color(0xff5BA890)

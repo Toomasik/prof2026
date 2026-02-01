@@ -2,6 +2,7 @@ package com.example.myapplication.presentation.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapplication.R
 import com.example.myapplication.presentation.reusable.Space
 import com.example.myapplication.presentation.ui.theme.Blue
@@ -46,10 +48,10 @@ import com.example.myapplication.presentation.ui.theme.LightGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController) {
     Scaffold(
         topBar = {
-            TopBar()
+            TopBar(navController)
         }) { innerPadding ->
         Column(
             Modifier
@@ -84,7 +86,7 @@ fun MainScreen() {
 }
 
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavController) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -98,6 +100,7 @@ fun TopBar() {
             modifier = Modifier
                 .size(54.dp)
                 .clip(CircleShape)
+                .clickable { navController.navigate("Profile") }
         )
         Space(height = 5.dp)
         Text(text = "Hello, Emil", color = Color.White, fontSize = 22.sp, fontWeight = W500)
