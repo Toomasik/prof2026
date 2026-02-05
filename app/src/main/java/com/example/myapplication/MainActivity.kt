@@ -14,7 +14,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.presentation.SignUp.SignUp
+import com.example.myapplication.presentation.animal.AnimalScreen
+import com.example.myapplication.presentation.animal.CorrectAnimalAnswerScreen
+import com.example.myapplication.presentation.animal.WrongAnimalAnswerScreen
 import com.example.myapplication.presentation.choose_language.ChooseLanguageScreen
+import com.example.myapplication.presentation.exercise_word_practice.WordsTask
 import com.example.myapplication.presentation.login.LoginScreen
 import com.example.myapplication.presentation.main.MainScreen
 import com.example.myapplication.presentation.on_boarding.OnBoarding
@@ -47,6 +51,18 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("Profile") {
                         ProfileScreen(navController)
+                    }
+                    composable("Animal") {
+                        AnimalScreen(navController)
+                    }
+                    composable("Animal_correct") {
+                        CorrectAnimalAnswerScreen(navController)
+                    }
+                    composable("Animal_wrong") {
+                        WrongAnimalAnswerScreen(navController)
+                    }
+                    composable("Word_task") {
+                        WordsTask(navController)
                     }
                 }
 

@@ -33,8 +33,8 @@ fun InputComponent(
     title: String,
     placeholder: String,
     isPassword: Boolean,
-    value: String,
-    onValueChanged: (String) -> Unit
+    value: String = "",
+    onValueChanged: (String) -> Unit = {}
 ) {
     var isHided by remember { mutableStateOf(true) }
     Text(title, fontSize = 15.sp, color = DarkGray, modifier = Modifier.fillMaxWidth())

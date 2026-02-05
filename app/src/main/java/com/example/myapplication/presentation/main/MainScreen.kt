@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,15 +16,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,11 +36,21 @@ import com.example.myapplication.presentation.ui.theme.Dark
 import com.example.myapplication.presentation.ui.theme.DeepBlue
 import com.example.myapplication.presentation.ui.theme.Gray
 import com.example.myapplication.presentation.ui.theme.GrayText
-import com.example.myapplication.presentation.ui.theme.LightGray
+import com.example.myapplication.presentation.ui.theme.Green
+import com.example.myapplication.presentation.ui.theme.Orange
+import com.example.myapplication.presentation.ui.theme.Red
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavController) {
+    val list_of_colors = listOf(Blue, Red, Orange, Green)
+    val list_of_games = listOf("Animal", "Word_task", "Main", "Main")
+    val list_of_icons = listOf(
+        R.drawable.execise_animal,
+        R.drawable.correct_the_word,
+        R.drawable.audition,
+        R.drawable.game
+    )
     Scaffold(
         topBar = {
             TopBar(navController)
@@ -75,8 +77,13 @@ fun MainScreen(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(17.dp),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                items(4) {
-                    Game()
+                items(4) { index ->
+                    Game(
+                        list_of_games[index],
+                        list_of_colors[index],
+                        list_of_icons[index],
+                        navController
+                    )
                 }
 
             }
@@ -144,14 +151,21 @@ fun User() {
 }
 
 @Composable
-fun Game() {
+fun Game(game_name: String, bg_color: Color, icon_id: Int, navController: NavController) {
     Column(
         Modifier
-            .background(Blue, RoundedCornerShape(20.dp))
-            .padding(vertical = 10.dp, horizontal = 12.dp),
+            .background(bg_color, RoundedCornerShape(20.dp))
+            .padding(vertical = 10.dp, horizontal = 12.dp)
+            .clickable {
+                navController.navigate(game_name)
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painterResource(R.drawable.game), null, modifier = Modifier.size(90.dp, 80.dp))
+        Image(
+            painterResource(icon_id),
+            null,
+            modifier = Modifier.size(90.dp, 80.dp)
+        )
         Space(height = 7.dp)
         Text("Guess the animal", color = Color.White, fontSize = 13.sp)
     }
